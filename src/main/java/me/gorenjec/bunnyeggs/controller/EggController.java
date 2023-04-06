@@ -1,2 +1,4 @@
-package me.gorenjec.bunnyeggs.controller;public class EggController {
+package me.gorenjec.bunnyeggs.controller;
+
+public class EggController {
 }

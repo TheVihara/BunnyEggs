@@ -1,2 +1,4 @@
-package me.gorenjec.bunnyeggs.storage;public class SQLStorage {
+package me.gorenjec.bunnyeggs.storage;
+
+public class SQLStorage {
 }

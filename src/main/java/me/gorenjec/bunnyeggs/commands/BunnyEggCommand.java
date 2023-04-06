@@ -1,2 +1,4 @@
-package me.gorenjec.bunnyeggs.commands;public class BunnyEggCommand {
+package me.gorenjec.bunnyeggs.commands;
+
+public class BunnyEggCommand {
 }

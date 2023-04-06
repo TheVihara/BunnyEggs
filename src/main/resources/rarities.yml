@@ -1,0 +1,25 @@
+legendary:
+  display-name: "&6Legendary"
+  points: 10
+  xp: 10
+  money: 120
+epic:
+  display-name: "&5Epic"
+  points: 7
+  xp: 6
+  money: 80
+rare:
+  display-name: "&9Rare"
+  points: 4
+  xp: 4
+  money: 60
+uncommon:
+  display-name: "&aUncommon"
+  points: 2
+  xp: 2
+  money: 40
+common:
+  display-name: "&aCommon"
+  points: 1
+  xp: 1
+  money: 10
