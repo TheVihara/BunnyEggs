@@ -1,0 +1,6 @@
+gui:
+  title: "Egg Collection (%bunnyeggs_egg_amount%)"
+  item:
+    name: "%bunnyeggs_name%"
+    lore:
+      - "%status%"

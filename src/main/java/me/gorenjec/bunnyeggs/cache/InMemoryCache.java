@@ -3,6 +3,8 @@ package me.gorenjec.bunnyeggs.cache;
 import me.gorenjec.bunnyeggs.models.BunnyEgg;
 import me.gorenjec.bunnyeggs.models.EggRarity;
 import me.gorenjec.bunnyeggs.models.PlayerProfile;
+import me.gorenjec.bunnyeggs.storage.files.EggsFile;
+import me.gorenjec.bunnyeggs.storage.files.RaritiesFile;
 import org.bukkit.Location;
 
 import java.util.HashMap;
@@ -14,11 +16,13 @@ public class InMemoryCache {
     private Map<Location, BunnyEgg> bunnyEggs = new HashMap<>();
     private Map<String, EggRarity> eggRarities = new HashMap<>();
 
-    public InMemoryCache() {
-        cache();
+    public InMemoryCache(EggsFile eggsFile, RaritiesFile raritiesFile) {
+        cache(eggsFile, raritiesFile);
     }
 
-    public void cache() {
+    public void cache(EggsFile eggsFile, RaritiesFile raritiesFile) {
+        this.eggRarities = raritiesFile.getEggRarities();
+        this.bunnyEggs = eggsFile.getBunnyEggs(this);
     }
 
     public void flush() {
@@ -38,6 +42,17 @@ public class InMemoryCache {
 
     public BunnyEgg getBunnyEgg(Location location) {
         return bunnyEggs.get(location);
+    }
+
+    public Location getBunnyEggLocation(BunnyEgg bunnyEgg) {
+        for (Location location : bunnyEggs.keySet()) {
+            BunnyEgg cachedBunnyEgg = bunnyEggs.get(location);
+
+            if (cachedBunnyEgg.id().equalsIgnoreCase(bunnyEgg.id())) {
+                return location;
+            }
+        }
+        return null;
     }
 
     public EggRarity getEggRarity(String name) {

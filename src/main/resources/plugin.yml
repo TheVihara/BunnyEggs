@@ -1,4 +1,4 @@
 name: BunnyEggs
-version: '${version}'
+version: @version@
 main: me.gorenjec.bunnyeggs.BunnyEggs
 api-version: 1.19

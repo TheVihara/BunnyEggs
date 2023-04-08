@@ -1,0 +1,4 @@
+DIRT_EGG:
+  display-name: "Dirt Egg"
+  rarity: "legendary"
+  loc: { world: "world", x: 10, y: 10, z: 10 }

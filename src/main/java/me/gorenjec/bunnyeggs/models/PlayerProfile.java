@@ -1,12 +1,20 @@
 package me.gorenjec.bunnyeggs.models;
 
+import me.gorenjec.bunnyeggs.storage.SQLStorage;
+import me.gorenjec.bunnyeggs.util.TextUtils;
+import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.text.minimessage.MiniMessage;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PlayerProfile {
     private Player player;
     private Collection<BunnyEgg> collectedBunnyEggs;
+    private Map<Location, BunnyEgg> newlyCollectedBunnyEggs = new HashMap<>();
     private int points;
 
     public PlayerProfile(Player player, Collection<BunnyEgg> collectedBunnyEggs, int points) {
@@ -15,12 +23,25 @@ public class PlayerProfile {
         this.points = points;
     }
 
-    public boolean addCollectedBunnyEgg(BunnyEgg bunnyEgg) {
-        if (!collectedBunnyEggs.contains(bunnyEgg)) {
-            collectedBunnyEggs.add(bunnyEgg);
+    public void flush(SQLStorage storage) {
+        for (Map.Entry<Location, BunnyEgg> bunnyEgg : newlyCollectedBunnyEggs.entrySet()) {
+            storage.insertCollectedEgg(this, bunnyEgg.getKey(), bunnyEgg.getValue());
+        }
+
+        collectedBunnyEggs.addAll(newlyCollectedBunnyEggs.values());
+        newlyCollectedBunnyEggs.clear();
+    }
+
+    public boolean addCollectedBunnyEgg(Location location, BunnyEgg bunnyEgg) {
+        if (!collectedBunnyEggs.contains(bunnyEgg) && !newlyCollectedBunnyEggs.containsValue(bunnyEgg)) {
+            newlyCollectedBunnyEggs.put(location, bunnyEgg);
             return true;
         }
         return false;
+    }
+
+    public void sendMessage(Audience audience, String text) {
+        audience.sendMessage(TextUtils.getComponent(text));
     }
 
     public void removeCollectedBunnyEgg(BunnyEgg bunnyEgg) {
